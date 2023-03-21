@@ -44,4 +44,8 @@ public class CreateDoctorService implements CreateDoctorUseCase {
                 .matcher(email)
                 .matches();
     }
+
+    public static boolean lookatcomment(String email, String regexPattern) {
+        return false;
+    }
 }
