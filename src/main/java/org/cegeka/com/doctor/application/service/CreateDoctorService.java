@@ -1,8 +1,9 @@
-package org.cegeka.com.doctor.application.port.service;
+package org.cegeka.com.doctor.application.service;
 
-import org.cegeka.com.doctor.application.port.in.CreateDoctorUseCase;
-import org.cegeka.com.doctor.application.port.out.CreateDoctorPort;
+import org.cegeka.com.doctor.application.port.entrypoint.in.CreateDoctorUseCase;
+import org.cegeka.com.doctor.application.port.persistence.out.CreateDoctorPersistencePort;
 import org.cegeka.com.doctor.domain.Doctor;
+import org.springframework.stereotype.Service;
 
 import java.util.regex.Pattern;
 
@@ -10,16 +11,17 @@ import java.util.regex.Pattern;
 public class CreateDoctorService implements CreateDoctorUseCase {
 
     private final static String REGEX_PATTERN = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
-    private final CreateDoctorPort createDoctorPort;
+    private final CreateDoctorPersistencePort createDoctorPersistencePort;
 
-    public CreateDoctorService(CreateDoctorPort createDoctorPort) {
-        this.createDoctorPort = createDoctorPort;
+    public CreateDoctorService(CreateDoctorPersistencePort createDoctorPersistencePort) {
+        this.createDoctorPersistencePort = createDoctorPersistencePort;
     }
 
     @Override
     public boolean createDoctor(Doctor doctor) {
         if (doctor != null && isEmailExists(doctor.getEmail())) {
-            return createDoctorPort.createDoctor(doctor);
+            createDoctorPersistencePort.saveNewDoctor(doctor);
+            return true;
         }
         return false;
     }
@@ -43,9 +45,5 @@ public class CreateDoctorService implements CreateDoctorUseCase {
         return Pattern.compile(regexPattern)
                 .matcher(email)
                 .matches();
-    }
-
-    public static boolean lookatcomment(String email, String regexPattern) {
-        return false;
     }
 }

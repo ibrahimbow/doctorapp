@@ -1,25 +1,31 @@
 package org.cegeka.com.doctor.domain;
 
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+
+@Builder(toBuilder = true)
+@Getter(AccessLevel.PACKAGE)
 public class Doctor {
 
-    private int doctorId;
+    private int id;
     private String name;
     private String specialist;
     private String email;
 
-    public Doctor(int doctorId, String name, String specialist, String email) {
-        this.doctorId = doctorId;
+    public Doctor(int id, String name, String specialist, String email) {
+        this.id = id;
         this.name = name;
         this.specialist = specialist;
         this.email = email;
     }
 
-    public int getDoctorId() {
-        return doctorId;
+    public int getId() {
+        return id;
     }
 
-    public void setDoctorId(int doctorId) {
-        this.doctorId = doctorId;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {

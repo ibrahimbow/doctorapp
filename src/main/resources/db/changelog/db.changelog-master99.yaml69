@@ -1,0 +1,30 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-doctors-doctor
+      author: ibrahimbow
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: doctors
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: doctor_pkey
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: full_name
+                  type: VARCHAR(250)
+              - column:
+                  name: specialist
+                  type: VARCHAR(250)
+              - column:
+                  name: email
+                  type: VARCHAR(250)
+            tableName: doctors
